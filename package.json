@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx parcel index.html",
-    "build": "npx parcel build index.html"
+    "dev": "parcel index.html --no-source-maps",
+    "build": "parcel build  --no-minify --no-source-maps --no-cache --no-content-hash index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dat.gui": "^0.7.7",
+    "htmlnano": "^0.2.9",
     "noisejs": "^2.1.0",
+    "parcel-bundler": "^1.12.5",
     "three": "^0.127.0"
   },
   "devDependencies": {

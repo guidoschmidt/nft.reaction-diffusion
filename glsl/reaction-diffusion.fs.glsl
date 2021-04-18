@@ -72,7 +72,7 @@ void main() {
   newState.b = oldState.b * 0.98;
   newState.a = oldState.a * 0.9998;
   
-  killRate += (1.0 - circle(uv, vec2(0.5, 0.5), 0.75 + 0.17 * pow(sin(uTime * 0.15), 3.0))) * 0.1;
+  killRate += (1.0 - circle(uv, vec2(0.5, 0.5), 0.5 + 0.17 * pow(sin(uTime * 0.15), 3.0))) * 0.1;
   killRate += sin(uTime * 0.25) * 0.01;
   feedRate += cos(uTime * 0.20) * 0.01;
 
@@ -115,10 +115,14 @@ void main() {
 
   // Drawing
   vec2 mouse = uMouse.xy;
-  newState.r += circle(uv, mouse, uBrush.x * uResolution.y) * uMouse.w * 0.005;
-  newState.g += circle(uv, mouse, uBrush.x * uResolution.y) * uMouse.z * 0.005;
+  newState.r += circle(uv, mouse, uBrush.x * uResolution.y) * uMouse.w * 0.01;
+  newState.g += circle(uv, mouse, uBrush.x * uResolution.y) * uMouse.z * 0.01;
 
   newState = clamp(newState, 0.0, 1.0);
 
-  gl_FragColor = vec4(newState.rgb, newState.a);
+  if (uBrush.y > 0.0) {
+    gl_FragColor = vec4(0.0);
+  } else {
+    gl_FragColor = vec4(newState.rgb, newState.a);
+  }
 }

@@ -16,8 +16,8 @@ const canvas = document.querySelector("#canvas");
 let size = canvas.getBoundingClientRect();
 const pixelRatio = 1.0;
 const reactionDiffusionSettings = {
-  diffusionRateA: 0.99,
-  diffusionRateB: 0.28,
+  diffusionRateA: 1.0,
+  diffusionRateB: 0.25,
   feedRate: 0.0421,
   killRate: 0.059,
   brushSize: 0.00001,
@@ -68,7 +68,7 @@ renderer.setClearColor(0x9d9d94, 1.0);
 renderer.setPixelRatio(pixelRatio);
 
 // Render targets
-const textureTargetScale = 0.5;
+const textureTargetScale = 0.3;
 let renderTargetSize = new THREE.Vector2(
   size.width * textureTargetScale,
   size.height * textureTargetScale
@@ -86,6 +86,7 @@ let renderTargets = [0, 1].map(
 const mousePosition = new THREE.Vector2(0, 0);
 let mouseDown = false;
 let mouseRightDown = false;
+let clear = false;
 
 const screenToShader = (size, x, y) => {
   const _x = (x / size.width) * pixelRatio;
@@ -116,6 +117,16 @@ window.addEventListener("pointerup", () => {
 });
 
 document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+document.addEventListener("keyup", (e) => {
+  clear = false;
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "c") {
+    clear = true;
+  }
+});
 
 window.addEventListener("resize", (e) => {
   size = {
@@ -149,7 +160,12 @@ window.addEventListener("resize", (e) => {
 const reactionDiffusionMaterial = new THREE.ShaderMaterial({
   uniforms: {
     uBrush: {
-      value: new THREE.Vector4(reactionDiffusionSettings.brushSize, 0, 0, 0),
+      value: new THREE.Vector4(
+        reactionDiffusionSettings.brushSize,
+        clear,
+        0,
+        0
+      ),
     },
     uDiffusionSettings: {
       value: new THREE.Vector4(
@@ -205,6 +221,12 @@ const renderLoop = () => {
   for (let i = 0; i < 4; i++) {
     const $t = clock.getElapsedTime();
     // Update uniforms
+    reactionDiffusionMaterial.uniforms.uBrush.value.set(
+      reactionDiffusionSettings.brushSize,
+      clear,
+      0.0,
+      0.0
+    );
     reactionDiffusionMaterial.uniforms.uFrame.value = uFrameCounter;
     reactionDiffusionMaterial.uniforms.uTime.value = $t;
     reactionDiffusionMaterial.uniforms.uMouse.value.set(
