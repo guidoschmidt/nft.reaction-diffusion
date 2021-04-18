@@ -1,5 +1,5 @@
 # NFT/Reaction Diffusion
-### Source code for interactive NFT mints on [hicetnunc](https://www.hicetnunc.xyz/objkt/37551)
+### Source code for [my first interactive NFT mint on hicetnunc, OBJKT #37551](https://www.hicetnunc.xyz/objkt/37551)
 
 ![Reaction Diffusion Experiment](cover.png)
 
