@@ -94,6 +94,7 @@ const screenToShader = (size, x, y) => {
   mousePosition.set(_x, _y);
 };
 
+// Interaction
 window.addEventListener("pointermove", (e) => {
   const screenX = e.clientX;
   const screenY = e.clientY;
@@ -145,14 +146,6 @@ window.addEventListener("resize", (e) => {
     size.width * textureTargetScale,
     size.height * textureTargetScale
   );
-  // renderTargets = [0, 1].map(
-  //   () =>
-  //     new THREE.WebGLRenderTarget(renderTargetSize.x, renderTargetSize.y, {
-  //       format: THREE.RGBAFormat,
-  //       type: THREE.FloatType,
-  //       encoding: THREE.sRGBEncoding,
-  //     })
-  // );
   reactionDiffusionMaterial.uniforms.uResolution.value = renderTargetSize;
 });
 
